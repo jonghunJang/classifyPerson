@@ -66,12 +66,31 @@
             // }else{
             //     labelContainer.childNodes[0].innerHTML = "알 수 없음";
             // }
+            let maxPredictClassNum = 0;
+            let maxProbabilityRatio = 0;
             for (let i = 0; i < maxPredictions; i++) {
-                const classPrediction =
-                    prediction[i].className + ": " + prediction[i].probability.toFixed(2);
-                labelContainer.childNodes[i].innerHTML = classPrediction;
+                const probabilityRatio = prediction[i].probability.toFixed(2);
+                if(maxProbabilityRatio <= probabilityRatio){                    
+                    maxProbabilityRatio = probabilityRatio;
+                    maxPredictClassNum = i;
+                }                
+                // const classPrediction =
+                //     prediction[i].className + ": " + prediction[i].probability.toFixed(2);
+                // labelContainer.childNodes[i].innerHTML = classPrediction;
                 console.log(i + " : " + prediction[i].className + " : " + prediction[i].probability.toFixed(2));
             }
+            switch (maxPredictClassNum) {
+                case 0:
+                    labelContainer.childNodes[0].innerHTML = "남자("+prediction[maxPredictClassNum].probability.toFixed(4)*100+"%)";
+                    break;
+                case 1:
+                    labelContainer.childNodes[0].innerHTML = "여자("+prediction[maxPredictClassNum].probability.toFixed(4)*100+"%)";
+                    break;            
+                default:
+                    break;
+            }
+            // const classPrediction = prediction[maxPredictClassNum].className + ": " + prediction[maxPredictClassNum].probability.toFixed(2);
+            // labelContainer.childNodes[maxPredictClassNum].innerHTML = classPrediction;
         }
     </script>
 </body>
